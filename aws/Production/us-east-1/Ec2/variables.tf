@@ -6,10 +6,10 @@ variable region {
 
 variable ec2_key_name {
     description = "Name of your AWS key"
-    type        = "string"
+    type        = "list"
 }
 
 variable ec2_public_key {
     description = "AWS ssh public key to upload"
-    type        = "string" 
+    type        = "list" 
 }
