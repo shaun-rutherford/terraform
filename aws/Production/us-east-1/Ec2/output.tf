@@ -5,5 +5,7 @@ terraform {
     dynamodb_table  = "ojutai_us_east_1_production_terraform_state_lock"
     region          = "us-east-1"
     key             = "terraform.tfstate"
+    #access_key      = "<set here or via aws cli tools>"
+    #secret_key      = "<set here or via aws cli tools>"
   }
 }
