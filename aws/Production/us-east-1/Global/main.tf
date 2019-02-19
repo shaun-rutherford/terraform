@@ -1,6 +1,5 @@
-module "global_provider" {
-    source = "../../../Modules/provider"
-    region     = "${var.global_region}"
-    access_key = "${var.global_access_key}"
-    secret_key = "${var.global_secret_key}"
+provider "aws" {
+  region     = "${var.region}"
+  access_key = "${var.access_key}"
+  secret_key = "${var.secret_key}"
 }
