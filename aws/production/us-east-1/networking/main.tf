@@ -1,16 +1,10 @@
-module "network_variables" {
-    source = "../../modules/networking"
-
-
+provider "aws" {
+  region     = "${var.region}"
 }
 
-module "global_variables" {
-    source = "../../modules/globals"
-
-    environment = "${var.aws_environment}"
-    application = "${var.aws_application}"
-    region      = "${var.aws_region}"
-    access_key  = "${var.aws_access_key}"
-    secret_key  = "${var.aws_secret_key}"
-    name_prefix = "${local.aws_name_prefix}"
+module "main VPC" {
+    source           = "../../../Modules/vpc"
+    cidr_block       = "${var.networking_cidr_block[0]}"
+    vpc_name         = "${var.networking_vcp_name[0]}"
+    instance_tenancy = "${var.networking_instance_tenancy}"
 }
