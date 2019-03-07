@@ -1,16 +1,14 @@
-variable "region_network" {
-    description = "The aws region you want to build in"
+variable networking_cidr_block {
+    description = "IP Cidr block for subnet"
+    type        = "list"
 }
 
-variable "access_key_network" {
-    description = "Your aws access key, https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html"
+variable networking_vpc_name {
+    description = "Name of the VPC Subnet"
+    type        = "list"
 }
 
-variable "secret_key_network" {
-    description = "Your aws secret key, https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html"
+variable networking_instance_tenancy {
+    description = "A tenancy option for instances launched into the VPC"
+    type        = "string"
 }
-
-variable "vpc_networking" {
-    description = "Your aws vpc name"
-}
-
