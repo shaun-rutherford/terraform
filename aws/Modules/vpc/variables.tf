@@ -3,7 +3,7 @@ variable cidr_block {
     type        = "string"
 }
 
-variable vcp_name {
+variable vpc_name {
     description = "Name of the VPC Subnet"
     type        = "string"
 }
