@@ -21,11 +21,54 @@ If you prefer not to use the AWS CLI tools you'll need to add your access and se
 
 Terraform backend is the first thing to happen in the Terraform script and it cannot use variable interpolation as a consequence of that.  What this essentially means is that your access and secret keys must be hard coded somewhere in order to utilize the S3 backend.
 
+The first thing you MUST run when first starting a new availability zone is the Global S3 code.  This sets up the S3 bucket and dynamodb table for use by all the other modules.  This is very important as it's how we are going to keep track of state in Terraform.
+
 ## Modules
 I've written my code to take advantage of modules (re-usable code) as much as possible.  I'll outline each module below to explain how they work and examples of how to utilize them yourself.
 
-#### key_pair
+All modules have several variables of type string since each resource must be called once during creation but the same variable can be of type list outside the module so we can iterate over them and build multiple resources without having to rewrite code.
+
+All entries require you to manually set the provider region.  This was a design decision since I believe you should seperate out your code by region and setting the region variable multiple times would be redundant.
+
+To manage multiple resources of the same type add additional entries into the list.
+Example multiple VPCs:
+```
+vpc_cidr_block       = ["172.32.1.0/24", "172.32.2.0/24"]
+vpc_tag_name         = ["main1", "second"]
+vpc_instance_tenancy = "default"
+```
+
+## KEY_PAIR
 This module adds an ssh-key to an EC2 environment in a region of your choosing.
 
-key_pair is a string in the module (can only send one at a time to the resource) but is a list in ec2 vars so that you can send more then one key pair.
-use index numbers to seperate them out in main.tf
+Example:
+```
+module "<username>_key" {
+    source     = "../../../Modules/key_pair"
+    public_key = "${var.ec2_public_key[0]}"
+    key_name   = "${var.ec2_key_name[0]}"
+}
+```
+
+#### VPC
+This module creates a VPC in a region of your choosing.
+
+Example:
+```
+module "<VPC NAME>" {
+    source           = "../../../Modules/VPC"
+    cidr_block       = "${var.vpc_cidr_block[0]}"
+    tag_name         = "${var.vpc_tag_name[0]}"
+    instance_tenancy = "${var.vpc_instance_tenancy}"
+}
+```
+
+#### GATEWAY
+This module creates a new aws gateway attached to a VPC of your choosing.  The gateway uses the VPC Name tag to know what VPC_ID to attach to.
+```
+module "main_network" {
+    source       = "../../../Modules/Gateway"
+    vpc_tag_name = "${var.gateway_vpc_tag_name[0]}"
+    tag_name     = "${var.gateway_tag_name[0]}"
+}
+```
