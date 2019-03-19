@@ -1,15 +1,8 @@
-variable region {
-    description = "AWS region to use"
-    type        = "string"
-    default     = "us-east-1"
-}
-
-variable ec2_key_name {
+variable key_pair_key_name {
     description = "Name of your AWS key"
     type        = "list"
 }
-
-variable ec2_public_key {
+variable key_pair_public_key {
     description = "AWS ssh public key to upload"
     type        = "list" 
 }
