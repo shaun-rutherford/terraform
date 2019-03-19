@@ -50,6 +50,12 @@ module "<username>_key" {
 }
 ```
 
+Example tfvars:
+```
+key_pair_public_key = ["ssh-rsa <SSH KEY STRING HERE>"]
+key_pair_key_name   = ["srutherford"]
+```
+
 #### VPC
 This module creates a VPC in a region of your choosing.
 
@@ -63,12 +69,43 @@ module "<VPC NAME>" {
 }
 ```
 
-#### GATEWAY
-This module creates a new aws gateway attached to a VPC of your choosing.  The gateway uses the VPC Name tag to know what VPC_ID to attach to.
+Example tfvars:
 ```
-module "main_network" {
+vpc_cidr_block = ["172.32.1.0/24"]
+vpc_tag_name = ["Production"]
+vpc_instance_tenancy = "default"
+```
+
+#### GATEWAY
+This module creates a new aws gateway attached to a VPC of your choosing.  The gateway uses the VPC Name tag to know what VPC ID to attach to.
+```
+module "<Gateway Name>" {
     source       = "../../../Modules/Gateway"
     vpc_tag_name = "${var.gateway_vpc_tag_name[0]}"
     tag_name     = "${var.gateway_tag_name[0]}"
 }
+```
+
+Example tfvars:
+```
+gateway_vpc_tag_name = ["Production"]
+gateway_tag_name = ["Production"]
+```
+
+#### SUBNET
+This module creates a new aws subnet inside a VPC of your choosing.  The Subnet uses the VPC Name tag to know what VPC ID to attach to.
+```
+module "<Subnet Name>" {
+    source = "../../../Modules/Subnet"
+    vpc_tag_name = "${var.subnet_vpc_tag_name[0]}"
+    tag_name     = "${var.subnet_tag_name[0]}"
+    cidr_block   = "${var.subnet_cidr_block[0]}"
+}
+```
+
+Example tfvars:
+```
+vpc_cidr_block = ["172.32.1.0/24"]
+vpc_tag_name = ["Production"]
+vpc_instance_tenancy = "default"
 ```
