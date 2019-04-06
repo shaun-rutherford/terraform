@@ -132,6 +132,7 @@ module "Inbound_22_Outbound_Any" {
 ```
 
 Example tfvars:
+```
 security_group_vpc_tag_name       = ["Production"]
 security_group_tag_name           = ["Production"]
 security_group_name               = ["Production Port 22", "Production Port 80"]
@@ -143,3 +144,4 @@ security_group_egress_from_port   = ["0"]
 security_group_egress_to_port     = ["0"]
 security_group_egress_protocol    = ["-1"]
 security_group_egress_cidr_block  = [["0.0.0.0/0"]]
+```
