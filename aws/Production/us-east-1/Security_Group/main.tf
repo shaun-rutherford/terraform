@@ -31,3 +31,18 @@ module "Inbound_80_Outbound_Any" {
     egress_protocol    = "${var.security_group_egress_protocol[0]}"
     egress_cidr_block  = "${var.security_group_egress_cidr_block[0]}"
 }
+
+module "Inbound_443_Outbound_Any" {
+    source             = "../../../Modules/Security_Group"
+    vpc_tag_name       = "${var.security_group_vpc_tag_name[0]}"
+    tag_name           = "${var.security_group_tag_name[0]}"
+    name               = "${var.security_group_name[2]}"
+    ingress_from_port  = "${var.security_group_ingress_from_port[2]}"
+    ingress_to_port    = "${var.security_group_ingress_to_port[2]}"
+    ingress_protocol   = "${var.security_group_ingress_protocol[0]}"
+    ingress_cidr_block = "${var.security_group_ingress_cidr_block[2]}"
+    egress_from_port   = "${var.security_group_egress_from_port[0]}"
+    egress_to_port     = "${var.security_group_egress_to_port[0]}"
+    egress_protocol    = "${var.security_group_egress_protocol[0]}"
+    egress_cidr_block  = "${var.security_group_egress_cidr_block[0]}"
+}
