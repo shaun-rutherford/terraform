@@ -109,3 +109,37 @@ vpc_cidr_block = ["172.32.1.0/24"]
 vpc_tag_name = ["Production"]
 vpc_instance_tenancy = "default"
 ```
+
+#### SECURITY GROUPS
+This module creates a new aws security group inside a VPC of your choosing.  The Security group uses the VPC Name tag to konw what VPC ID to associate with.
+This module manages one port per entry but multiple CIDR blocks per port.  Each port can be tied to the same tag name (such as Production) but must be given a unique name.
+The module is designed this way to get around terraform not having a loop mechanic at the time of this writing.
+```
+module "Inbound_22_Outbound_Any" {
+    source             = "../../../Modules/Security_Group"
+    vpc_tag_name       = "${var.security_group_vpc_tag_name[0]}"
+    tag_name           = "${var.security_group_tag_name[0]}"
+    name               = "${var.security_group_name[0]}"
+    ingress_from_port  = "${var.security_group_ingress_from_port[0]}"
+    ingress_to_port    = "${var.security_group_ingress_to_port[0]}"
+    ingress_protocol   = "${var.security_group_ingress_protocol[0]}"
+    ingress_cidr_block = "${var.security_group_ingress_cidr_block[0]}"
+    egress_from_port   = "${var.security_group_egress_from_port[0]}"
+    egress_to_port     = "${var.security_group_egress_to_port[0]}"
+    egress_protocol    = "${var.security_group_egress_protocol[0]}"
+    egress_cidr_block  = "${var.security_group_egress_cidr_block[0]}"
+}
+```
+
+Example tfvars:
+security_group_vpc_tag_name       = ["Production"]
+security_group_tag_name           = ["Production"]
+security_group_name               = ["Production Port 22", "Production Port 80"]
+security_group_ingress_from_port  = ["22", "80"]
+security_group_ingress_to_port    = ["22", "80"]
+security_group_ingress_protocol   = ["tcp"]
+security_group_ingress_cidr_block = [["73.196.82.3/32"], ["73.196.82.3/32", "10.10.1.0/24"]]
+security_group_egress_from_port   = ["0"]
+security_group_egress_to_port     = ["0"]
+security_group_egress_protocol    = ["-1"]
+security_group_egress_cidr_block  = [["0.0.0.0/0"]]
