@@ -5,16 +5,24 @@ data "aws_subnet" "subnet" {
   }
 }
 
+data "aws_security_groups" "security_groups" {
+  filter {
+    name = "group-name"
+    values = ["${var.security_group_names}"]
+  }
+}
+
 resource "aws_instance" "instance" {
-  ami = "${var.ami_id}"
-  instance_type = "${var.instance_type}"
+  ami                    = "${var.ami_id}"
+  instance_type          = "${var.instance_type}"
+  subnet_id              = "${data.aws_subnet.subnet.id}"
+  vpc_security_group_ids = ["${data.aws_security_groups.security_groups.ids}"]
+  key_name               = "${var.key_pair_name}"
 
   tags {
     name = "${var.tag_name}"
   }
 
-  subnet_id = "${data.aws_subnet.subnet.id}"
-  
 }
 
 resource "aws_eip" "lb" {
