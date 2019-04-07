@@ -145,3 +145,29 @@ security_group_egress_to_port     = ["0"]
 security_group_egress_protocol    = ["-1"]
 security_group_egress_cidr_block  = [["0.0.0.0/0"]]
 ```
+
+### EC2
+This module creates an ec2 instance.  You can specify the subnet, security group and key_pair to associte with the instance.
+```
+module "Production_EC2" {
+    source               = "../../../Modules/Ec2"
+    vpc_tag_name         = "${var.ec2_vpc_tag_name[0]}"
+    tag_name             = "${var.ec2_tag_name[0]}"
+    instance_type        = "${var.ec2_instance_type[0]}"
+    ami_id               = "${var.ec2_ami_id[0]}"
+    create_elastic_ip    = "${var.ec2_create_elastic_ip[0]}"
+    security_group_names = ["${var.ec2_security_group_names[0]}"]
+    key_pair_name        = "${var.ec2_key_pair_name[0]}"
+}
+```
+
+Example tfvars:
+```
+ec2_vpc_tag_name         = ["Production"]
+ec2_tag_name             = ["Production"]
+ec2_instance_type        = ["t2.micro"]
+ec2_ami_id               = ["ami-02e98f78"]
+ec2_create_elastic_ip    = ["true"]
+ec2_security_group_names = [["Port 22", "Port 80", "Port 443"]]
+ec2_key_pair_name        = ["somename"]
+```
