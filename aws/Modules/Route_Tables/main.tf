@@ -23,3 +23,8 @@ resource "aws_route_table" "route_table" {
         Name = "${var.tag_name}"
     }
 }
+
+resource "aws_main_route_table_association" "main_route_table_association" {
+    vpc_id = "${data.aws_vpc.vpc_data.id}"
+    route_table_id = "${aws_route_table.route_table.id}"
+}
