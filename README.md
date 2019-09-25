@@ -1,6 +1,7 @@
 # Terraform
 
 ## Description
+NOTE - This code was written before Terraform 1.12 was available.  Since then Terraform has proper loops and I'll be updating this code to take advantage of that as time permits and I learn how to properly use it.
 
 Welcome to my AWS terraform project.  This project is mostly a way for me to learn AWS+Terraform but you are free to use the code I've provided if it makes your life easier.
 
