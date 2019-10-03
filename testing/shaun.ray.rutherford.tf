@@ -47,6 +47,7 @@ EOT
 #gpg --gen-key
 #gpg --export "Shaun Rutherford" | base64
 #terraform output secret | base64 --decode | gpg --decrypt
+# testing
 
 output "secret" {
   value = "${aws_iam_access_key.shaun_ray_rutherford.encrypted_secret}"
